@@ -1,0 +1,40 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--  Customize your theme here.  -->
+        <item name="colorPrimary">@color/whiteOrange</item>
+        <item name="colorPrimaryDark">@color/orange</item>
+        <item name="colorAccent">@color/whiteOrange</item>
+    </style>
+
+    <style name="ActionbarTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <item name="colorPrimary">@color/whiteOrange</item>
+        <item name="colorPrimaryDark">@color/orange</item>
+        <item name="colorAccent">@color/whiteOrange</item>
+    </style>
+
+    <style name="AppTheme.noactionbar" parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/whiteOrange</item>
+        <item name="colorPrimaryDark">@color/orange</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="proifleDetailsView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">2dp</item>
+        <item name="android:background">@color/white</item>
+        <item name="android:layout_marginTop">5dp</item>
+    </style>
+
+    <!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
+    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
+    &lt;!&ndash; popup Window &ndash;&gt;
+    <style name="PopApply">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowCloseOnTouchOutside">true</item>
+    </style>-->
+
+    <style name="Themes">
+        <item name="colorAccent">@color/white</item>
+    </style>
+
+</resources>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.fragments.MoreInfoFragment">
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/userReview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <Button
+        android:id="@+id/addReviewMin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/button_sytle2"
+        android:drawableStart="@drawable/ic_add"
+        android:drawablePadding="10dp"
+        android:drawableTint="@color/white"
+        android:padding="15dp"
+        android:text="@string/reviews"
+        android:textAlignment="center"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+    <Button
+        android:id="@+id/addReviewMax"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/whiteOrange"
+        android:drawablePadding="10dp"
+        android:padding="15dp"
+        android:text="@string/reviews"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:visibility="gone" />
+
+</FrameLayout>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingBottom="10dp">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:orientation="vertical"
+            app:cardBackgroundColor="@color/white"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="8dp"
+            app:cardUseCompatPadding="true"
+            tools:ignore="UnusedAttribute">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/collegeImage"
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:scaleType="fitXY"
+                        tools:src="@drawable/college4" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="150dp"
+                        android:background="#75424141" />
+
+
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/collegeLogo"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_marginStart="15dp"
+                        android:layout_marginTop="80dp"
+                        android:background="@drawable/clglogo"
+                        app:civ_border_color="@color/white"
+                        app:civ_border_width="3dp" />
+
+                    <TextView
+                        android:id="@+id/collegeTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="90dp"
+                        android:layout_marginTop="90dp"
+                        android:layout_marginEnd="10dp"
+                        android:textColor="@color/white"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        tools:ignore="HardcodedText"
+                        tools:text="INDIAN INSTITUTE OF TECHNOLOGY - [IIT], NEW DELHI" />
+
+                    <ImageView
+                        android:id="@+id/wishIcon"
+                        android:layout_width="35dp"
+                        android:layout_height="35dp"
+                        android:layout_gravity="end"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginTop="20dp"
+                        tools:src="@drawable/ic_wish_list"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                </FrameLayout>
+
+                <!--college details -->
+                <!--<LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    &lt;!&ndash;first  subject details&ndash;&gt;
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="3dp"
+                                android:layout_marginEnd="5dp"
+                                android:text="₹ "
+                                android:textColor="@color/orangeLight"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                tools:ignore="HardcodedText" />
+
+                            <TextView
+                                android:id="@+id/collegeFees1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/orangeLight"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                tools:ignore="HardcodedText"
+                                android:text="1,628" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/courseCourse1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/orangeLight"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText"
+                            android:text="MBBS -FIRST YEAR FEES" />
+
+                    </LinearLayout>
+
+                    &lt;!&ndash;line&ndash;&gt;
+                    <TextView
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="10dp"
+                        android:background="@color/background" />
+
+                    &lt;!&ndash;second subject detail&ndash;&gt;
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="3dp"
+                                android:layout_marginEnd="5dp"
+                                android:text="₹ "
+                                android:textColor="@color/orangeLight"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                tools:ignore="HardcodedText" />
+
+                            <TextView
+                                android:id="@+id/collegeFees2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textColor="@color/orangeLight"
+                                android:textSize="15sp"
+                                android:textStyle="bold"
+                                tools:ignore="HardcodedText"
+                                android:text="1,145" />
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/courseCourse2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/orangeLight"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText"
+                            android:text="B.SC (MEDICINE) -FIRST YEAR FEES" />
+
+                    </LinearLayout>
+
+                    &lt;!&ndash;line&ndash;&gt;
+                    <TextView
+                        android:layout_width="2dp"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="5dp"
+                        android:background="@color/background" />
+
+                    &lt;!&ndash;ratting layout&ndash;&gt;
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/ratting"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/orangeLight"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText"
+                            android:text="8.4 / 10" />
+
+                        <TextView
+                            android:id="@+id/courseCourse3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/orangeLight"
+                            android:textSize="12sp"
+                            android:textStyle="bold"
+                            tools:ignore="HardcodedText"
+                            android:text="BASED ON 11 USER REVIEWS" />
+
+                    </LinearLayout>
+
+                </LinearLayout>-->
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

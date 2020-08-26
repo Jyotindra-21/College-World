@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#FFFFFF</color>
+    <color name="CADMIUMORANGE">#EC7F37</color>
+    <color name="black">#000000</color>
+    <color name="white">#ffffff</color>
+    <color name="whiteOrange">#ff5a09</color>
+    <color name="orangeLight">#ec7f37</color>
+    <color name="orange">#be4f0c</color>
+    <color name="optionColor">#393939</color>
+    <color name="background">#72B3B3B3</color>
+    <color name="background1">#4D2E2C2C</color>
+    <color name="blue">#2977e8</color>
+    <color name="yellow">#FF9800</color>
+    <color name="grey">#E9EAEE</color>
+    <color name="yellow1">#F8BA0F</color>
+    <color name="goodgrey">#535353</color>
+    <color name="drakblue">#293859</color>
+    <color name="lightgrey">#EEEEEE</color>
+</resources>
