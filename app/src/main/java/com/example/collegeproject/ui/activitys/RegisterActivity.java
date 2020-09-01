@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -42,8 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
     RadioGroup radioGroup;
     CheckBox box;
     public final static String PREF = "1";
-
-
+    ProgressBar processRes;
     int day, month, year;
 
     @Override
@@ -64,6 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
         submit = findViewById(R.id.submit);
         dob = findViewById(R.id.userDate);
         box = findViewById(R.id.tearms);
+        processRes = findViewById(R.id.processRes);
 
 
         dob.setOnClickListener(new View.OnClickListener() {
@@ -101,8 +102,9 @@ public class RegisterActivity extends AppCompatActivity {
                 male = findViewById(select);
 
                 if (new ConnectionCall(RegisterActivity.this).connectiondetect()) {
-                    if (validation()) {
 
+                    if (validation()) {
+                        processRes.setVisibility(View.VISIBLE);
                         HashMap<String, String> hashMap = new HashMap<>();
                         hashMap.put("type", "register");
 
@@ -122,8 +124,8 @@ public class RegisterActivity extends AppCompatActivity {
                                     JSONObject reader = new JSONObject(responseStr);
                                     if (reader.getString("action").equals("1")) {
 
+                                        processRes.setVisibility(View.INVISIBLE);
                                         JSONObject cat = jsn.getJSONObjectAt0(responseStr);
-
                                         String uid = cat.getString("id");
                                         SharedPreferences.Editor share;
                                         share = getSharedPreferences(PREF, MODE_PRIVATE).edit();
@@ -135,9 +137,11 @@ public class RegisterActivity extends AppCompatActivity {
                                         startActivity(i);
 
                                     } else {
+                                        processRes.setVisibility(View.INVISIBLE);
                                         Toast.makeText(RegisterActivity.this, "There was Some Problem in Registered ", Toast.LENGTH_LONG).show();
                                     }
                                 } catch (Exception e) {
+                                    processRes.setVisibility(View.INVISIBLE);
                                     Toast.makeText(RegisterActivity.this, "network issue" + responseStr, Toast.LENGTH_SHORT).show();
                                 }
 
@@ -152,62 +156,41 @@ public class RegisterActivity extends AppCompatActivity {
     }
 
     public boolean validation() {
-
         boolean isValid = true;
-
         if (TextUtils.isEmpty(name.getText().toString().trim())) {
             name.setError("Enter Your First Name");
             isValid = false;
-
-        }  else if (TextUtils.isEmpty(email.getText().toString().trim())) {
+        } else if (TextUtils.isEmpty(email.getText().toString().trim())) {
             email.setError("Enter Your Email Id");
             isValid = false;
-
         } else if (!Patterns.EMAIL_ADDRESS.matcher(email.getText().toString()).matches()) {
-
             email.setError("Enter Your valid Email ID");
             isValid = false;
-
         } else if (TextUtils.isEmpty(password.getText().toString().trim())) {
-
             passwordLY.setError("Enter Your Password");
             isValid = false;
-
         } else if (isValidPassword(password.getText().toString())) {
-
             passwordLY.setError("use a-z, A-Z, @!$#.., length 5-15");
             isValid = false;
         } else if (TextUtils.isEmpty(phoneno.getText().toString())) {
-
             phoneno.setError("Enter Your Phone No");
             isValid = false;
-
-
         } else if (phoneno.length() < 10 || phoneno.length() > 15) {
-
             phoneno.setError("Enter Your Valid Phone No");
             isValid = false;
-
         } else if (male.isChecked() && female.isChecked()) {
-
             Toast.makeText(RegisterActivity.this, "Please Select your Gender", Toast.LENGTH_LONG).show();
             isValid = false;
-
         } else if (TextUtils.isEmpty(dob.getText().toString())) {
-
             dob.setError("Enter Your Date Of Birth");
             isValid = false;
-
         } else if (TextUtils.isEmpty(city.getText().toString())) {
-
             city.setError("Enter Your City");
             isValid = false;
-
         } else if (!box.isChecked()) {
             Toast.makeText(RegisterActivity.this, "Check Term and Condition", Toast.LENGTH_LONG).show();
             box.setFocusable(true);
             isValid = false;
-
         } else {
             name.setError(null);
             email.setError(null);

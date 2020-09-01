@@ -3,67 +3,73 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageReview"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                tools:src="@drawable/clglogo" />
-
-            <TextView
-                android:id="@+id/nameReview"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="20dp"
-                android:textSize="20sp"
-                tools:text="sharma sumit" />
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profileReview"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    tools:src="@drawable/person1" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal">
+                <TextView
+                    android:id="@+id/nameReview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/whiteOrange"
+                    android:textSize="20sp"
+                    tools:text="sharma sumit" />
 
-            <RatingBar
-                android:id="@+id/ratingReview"
-                style="?android:attr/ratingBarStyleSmall"
-                android:layout_width="wrap_content"
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:numStars="5"
-                android:saveEnabled="true" />
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <RatingBar
+                    android:id="@+id/ratingReview"
+                    style="?android:attr/ratingBarStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:numStars="5"
+                    android:saveEnabled="true" />
+
+                <TextView
+                    android:id="@+id/dateReview"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="20dp"
+                    android:textColor="@color/whiteOrange"
+                    android:textSize="12sp"
+                    tools:text="2000-01-01" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/dateReview"
-                android:layout_width="wrap_content"
+                android:id="@+id/descriptionReview"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="20dp"
-                android:textSize="12sp"
-                tools:text="2000-01-01" />
+                android:layout_marginTop="10dp"
+                android:fontFamily="monospace"
+                android:textColor="@color/whiteOrange"
+                tools:text="this is my demo college review will be add" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/descriptionReview"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            tools:text="asdfghjkljhg fdsasdfghjkjgfdsaASDFGHJKLKJHG FDSAASDFGHJKLKJHGF" />
-
-    </LinearLayout>
 
 </LinearLayout>

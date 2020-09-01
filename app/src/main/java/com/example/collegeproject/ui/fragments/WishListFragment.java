@@ -11,7 +11,9 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.collegeproject.R;
@@ -38,6 +40,8 @@ public class WishListFragment extends Fragment {
     HashMap<WishListModule, List<String>> listHashMap;
     ArrayList<WishListModule> list = new ArrayList<>();
     String uid;
+    ImageView imageView;
+    ProgressBar progressBar;
     public static final String PREF = "1";
 
     @Override
@@ -45,6 +49,8 @@ public class WishListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_wish_list, container, false);
         recyclerView = view.findViewById(R.id.wishlist);
+        imageView = view.findViewById(R.id.wishNoData);
+        progressBar = view.findViewById(R.id.processWishList);
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext());
         linearLayoutManager.setOrientation(RecyclerView.VERTICAL);
@@ -66,14 +72,19 @@ public class WishListFragment extends Fragment {
             @Override
             public boolean setResponse(String responseStr) {
                 try {
+                    imageView.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
                     WishListResponse response = new Gson().fromJson(responseStr, WishListResponse.class);
                     if (response.action == 1) {
                         list.addAll(response.message);
                         WishListAdapter adapter = new WishListAdapter(getContext(), list, listHashMap);
                         recyclerView.setAdapter(adapter);
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 } catch (Exception e) {
-                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    imageView.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
+                    //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }

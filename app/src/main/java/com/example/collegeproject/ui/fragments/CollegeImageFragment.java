@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,13 +34,16 @@ public class CollegeImageFragment extends Fragment {
     RecyclerView recyclerView;
     String clg_id, name;
     TextView textView;
-
+    ImageView imageView;
+    ProgressBar progressBar;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_college_image, container, false);
         recyclerView = view.findViewById(R.id.imageGridView);
         textView = view.findViewById(R.id.imageClg);
+        imageView=view.findViewById(R.id.imageNoData);
+        progressBar=view.findViewById(R.id.processImage);
 
         name = getActivity().getIntent().getExtras().getString("clg_name");
         textView.setText(name);
@@ -59,20 +64,23 @@ public class CollegeImageFragment extends Fragment {
             @Override
             public boolean setResponse(String responseStr) {
                 try {
+                    progressBar.setVisibility(View.VISIBLE);
+                    imageView.setVisibility(View.INVISIBLE);
                     JSONObject r = new JSONObject(responseStr);
                     ImageResponse response = new Gson().fromJson(responseStr, ImageResponse.class);
                     if (response.action == 1) {
                         list.addAll(response.message);
                         ImageAdapter adapter = new ImageAdapter(getContext(), list);
                         recyclerView.setAdapter(adapter);
-                        Toast.makeText(getActivity(), "Get Data", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.INVISIBLE);
                     } else {
+                        progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getActivity(), "Data Not Available", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
-                    Toast.makeText(getActivity(), "iamge :" + e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                    // imageView.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
+                    //Toast.makeText(getActivity(), "iamge :" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                     imageView.setVisibility(View.VISIBLE);
                 }
                 return false;
             }

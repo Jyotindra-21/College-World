@@ -25,12 +25,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
 
     Context context;
     ArrayList<ReviewModule> list;
-    HashMap<ReviewModule, List<String>> listHashMap;
 
-    public ReviewAdapter(Context context, ArrayList<ReviewModule> list, HashMap<ReviewModule, List<String>> listHashMap) {
+    public ReviewAdapter(Context context, ArrayList<ReviewModule> list) {
         this.context = context;
         this.list = list;
-        this.listHashMap = listHashMap;
     }
 
     @NonNull
@@ -47,9 +45,10 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
         ReviewModule module = list.get(position);
         holder.name.setText(module.name);
         holder.description.setText(module.description);
-        Glide.with(context).load(utils_string.BASE_URL + utils_string.IMAGE_URL.USER_PROFILE + module.profile).into(holder.circleImageView);
         holder.ratingBar.setRating(module.ratting);
         holder.date.setText(module.rdate);
+        Glide.with(context).load(utils_string.BASE_URL + utils_string.IMAGE_URL.USER_PROFILE
+                + module.profile).into(holder.circleImageView);
     }
 
     @Override
@@ -58,17 +57,17 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        CircleImageView circleImageView;
         RatingBar ratingBar;
+        CircleImageView circleImageView;
         TextView name, description, date;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            circleImageView = itemView.findViewById(R.id.imageReview);
             ratingBar = itemView.findViewById(R.id.ratingReview);
             name = itemView.findViewById(R.id.nameReview);
             date = itemView.findViewById(R.id.dateReview);
             description = itemView.findViewById(R.id.descriptionReview);
+            circleImageView = itemView.findViewById(R.id.profileReview);
         }
     }
 }

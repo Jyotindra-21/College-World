@@ -16,20 +16,27 @@ import android.widget.AdapterViewFlipper;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.collegeproject.R;
+import com.example.collegeproject.adapters.CourseAndFeeAdapter;
 import com.example.collegeproject.adapters.ImageFlipperAdapter;
+import com.example.collegeproject.adapters.ReviewAdapter;
 import com.example.collegeproject.adapters.StreamApplyAdapter;
 import com.example.collegeproject.databasecall.NetworkCall;
 import com.example.collegeproject.databasecall.jsn;
 import com.example.collegeproject.databasecall.utils_string;
+import com.example.collegeproject.module.CourseAndFeeModule;
 import com.example.collegeproject.module.ImageModule;
+import com.example.collegeproject.module.ReviewModule;
 import com.example.collegeproject.module.StreamModule;
+import com.example.collegeproject.responsemodule.CourseAndFeeResponse;
 import com.example.collegeproject.responsemodule.ImageResponse;
+import com.example.collegeproject.responsemodule.ReviewResponse;
 import com.example.collegeproject.responsemodule.StreamResponse;
 import com.example.collegeproject.utility.SosManagement;
 import com.google.gson.Gson;
@@ -49,7 +56,9 @@ import static android.content.Context.MODE_PRIVATE;
 public class CollegeViewFragment extends Fragment {
 
     ArrayList<ImageModule> list = new ArrayList<>();
-    ArrayList<StreamModule> sAM = new ArrayList<>();
+    ArrayList<ReviewModule> reviewList = new ArrayList<>();
+    ArrayList<StreamModule> streaAplly = new ArrayList<>();
+    ArrayList<CourseAndFeeModule> courseList = new ArrayList<>();
     String clg_id, name;
     EditText nameAp, emailAp, phoneAp, clgNameAp, perAp;
     Spinner streamAp;
@@ -57,7 +66,7 @@ public class CollegeViewFragment extends Fragment {
     public static final String PREF = "1";
     Dialog dialog;
     AdapterViewFlipper fp;
-    RecyclerView clgReview;
+    RecyclerView reviewView, courseAndFree;
     Button apply;
     String uid, getStreamApply;
     String id = "1";
@@ -77,12 +86,9 @@ public class CollegeViewFragment extends Fragment {
         contact1 = view.findViewById(R.id.clgcontact);
         collegeImage = view.findViewById(R.id.collegeLogo);
         imageView = view.findViewById(R.id.dataImage);
-        clgReview = view.findViewById(R.id.clgReview);
         apply = view.findViewById(R.id.apply);
-
-        LinearLayoutManager manager = new LinearLayoutManager(getContext());
-        manager.setOrientation(RecyclerView.VERTICAL);
-        clgReview.setLayoutManager(manager);
+        reviewView = view.findViewById(R.id.clgReview);
+        courseAndFree = view.findViewById(R.id.courseAndFree);
 
         fp.setAutoStart(true);
         fp.setFlipInterval(4000);
@@ -104,25 +110,53 @@ public class CollegeViewFragment extends Fragment {
         branch1.setText(branch);
         contact1.setText(contact);
 
-
         Glide.with(this).load(utils_string.BASE_URL + utils_string.IMAGE_URL.COLLEGE_GALLERY +
                 profile).into(collegeImage);
-
         //flipperImage
-
         apply.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Dialog();
             }
         });
+
+        //flipperImage
         getImage();
 
         //getClgReview();
+        LinearLayoutManager manager = new LinearLayoutManager(getContext());
+        manager.setOrientation(RecyclerView.VERTICAL);
+        reviewView.setLayoutManager(manager);
+        getReview();
+
 
         return view;
 
 
+    }
+
+    private void getCourse() {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("type", "getCourse");
+        hashMap.put("clg_id", clg_id);
+        NetworkCall.call(hashMap).setDataResponseListener(new NetworkCall.SetDataResponse() {
+            @Override
+            public boolean setResponse(String responseStr) {
+
+                try {
+                    JSONObject r = new JSONObject(responseStr);
+                    CourseAndFeeResponse courseResponse = new Gson().fromJson(responseStr, CourseAndFeeResponse.class);
+                    if (courseResponse.action == 1) {
+                        CourseAndFeeAdapter adapter = new CourseAndFeeAdapter(getContext(), courseList);
+                        courseAndFree.setAdapter(adapter);
+                    }
+
+                } catch (JSONException e) {
+                    Toast.makeText(getContext(), "getCourse" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
+                return false;
+            }
+        });
     }
 
     //apply Button
@@ -156,6 +190,7 @@ public class CollegeViewFragment extends Fragment {
             public void onNothingSelected(AdapterView<?> adapterView) {
 
             }
+
         });
 
         //Dialog apply call
@@ -176,7 +211,6 @@ public class CollegeViewFragment extends Fragment {
                 NetworkCall.call(hashMap).setDataResponseListener(new NetworkCall.SetDataResponse() {
                     @Override
                     public boolean setResponse(String responseStr) {
-
                         try {
                             JSONObject r = new JSONObject(responseStr);
                             if (r.getString("action").equals("1")) {
@@ -206,8 +240,8 @@ public class CollegeViewFragment extends Fragment {
                     JSONObject r = new JSONObject(responseStr);
                     StreamResponse streamApplyResponse = new Gson().fromJson(responseStr, StreamResponse.class);
                     if (streamApplyResponse.action == 1) {
-                        sAM.addAll(streamApplyResponse.message);
-                        StreamApplyAdapter applyAdapter = new StreamApplyAdapter(getContext(),sAM);
+                        streaAplly.addAll(streamApplyResponse.message);
+                        StreamApplyAdapter applyAdapter = new StreamApplyAdapter(getContext(), streaAplly);
                         streamAp.setAdapter(applyAdapter);
                     } else {
                         Toast.makeText(getContext(), "There was some error fetching data.", Toast.LENGTH_SHORT).show();
@@ -255,7 +289,7 @@ public class CollegeViewFragment extends Fragment {
                         phoneAp.setText(phones);
 
                     } catch (Exception e) {
-                        Toast.makeText(getContext(), "Catch1:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), "Network Problem\n Check your Internet", Toast.LENGTH_SHORT).show();
                     }
                 }
                 return false;
@@ -264,9 +298,9 @@ public class CollegeViewFragment extends Fragment {
     }
 
     //get College Review By give users
-    /*void getClgReview() {
+    void getReview() {
         HashMap<String, String> hashMap = new HashMap<>();
-        hashMap.put("type", "getreviewuser");
+        hashMap.put("type", "getClgReview");
         hashMap.put("clg_id", clg_id);
 
         NetworkCall.call(hashMap).setDataResponseListener(new NetworkCall.SetDataResponse() {
@@ -276,19 +310,18 @@ public class CollegeViewFragment extends Fragment {
                     JSONObject r = new JSONObject(responseStr);
                     ReviewResponse reviewResponse = new Gson().fromJson(responseStr, ReviewResponse.class);
                     if (reviewResponse.action == 1) {
-                        list1.addAll(reviewResponse.message);
-                        ReviewAdapter adapter = new ReviewAdapter(getContext(), list1, listHashMap1);
-                        clgReview.setAdapter(adapter);
+                        reviewList.addAll(reviewResponse.message);
+                        ReviewAdapter adapter = new ReviewAdapter(getContext(), reviewList);
+                        reviewView.setAdapter(adapter);
                     }
-
                 } catch (JSONException e) {
-                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "getReviewUser" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
         });
 
-    }*/
+    }
 
 
     //Set College Image In Flipper View

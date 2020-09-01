@@ -34,7 +34,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#61424040" />
+                    android:background="#4D424040" />
 
                 <TextView
                     android:id="@+id/facultyClg"
@@ -78,48 +78,36 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="20dp">
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="4dp"
-                android:layout_marginTop="7dp"
-                android:layout_marginRight="4dp"
-                app:cardCornerRadius="4dp"
-                app:cardPreventCornerOverlap="true">
+                android:layout_height="wrap_content">
 
-                <LinearLayout
+                <ProgressBar
+                    android:id="@+id/processFaculty"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/facultyNoData"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/error_page"
+                    android:visibility="gone" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="10dp"
-                        android:layout_marginTop="15dp"
-                        android:layout_marginBottom="15dp"
-                        android:text="@string/faculty_details"
-                        android:textAllCaps="true"
-                        android:textColor="#393939"
-                        android:textSize="20sp" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/facultyDetail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/facultyDetail"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content" />
-
-                </LinearLayout>
-
-
-            </androidx.cardview.widget.CardView>
-
+            </FrameLayout>
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

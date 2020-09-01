@@ -21,7 +21,6 @@
     <string name="search">Search</string>
     <string name="top_college">Top College</string>
     <string name="profile">Profile</string>
-    <string name="todo">TODO</string>
     <string name="change_course">Change Course</string>
     <string name="reviews">Review</string>
     <string name="inquire">College Inquiry App</string>
@@ -116,4 +115,6 @@
     <string name="faculty">Faculty</string>
     <string name="description">Description</string>
     <string name="describe_your_experience">Describe Your Experience</string>
+    <string name="todo">TODO</string>
+    <string name="ratings">Rating:</string>
 </resources>

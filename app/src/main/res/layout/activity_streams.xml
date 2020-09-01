@@ -49,20 +49,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <ProgressBar
+            android:id="@+id/processStream1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone" />
+
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_stream"
+            android:id="@+id/rv_stream1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="20dp" />
 
-        <ProgressBar
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/processStream"
-            android:visibility="gone"
-            android:layout_gravity="center" />
+
+
         <ImageView
-            android:id="@+id/streamNoData"
+            android:id="@+id/streamsNoData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -70,6 +73,5 @@
             android:visibility="gone" />
 
     </FrameLayout>
-
 
 </LinearLayout>

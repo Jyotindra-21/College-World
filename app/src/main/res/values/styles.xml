@@ -25,13 +25,6 @@
         <item name="android:layout_marginTop">5dp</item>
     </style>
 
-    <!--<style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar"/>
-    <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light"/>
-    &lt;!&ndash; popup Window &ndash;&gt;
-    <style name="PopApply">
-        <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowCloseOnTouchOutside">true</item>
-    </style>-->
 
     <style name="Themes">
         <item name="colorAccent">@color/white</item>

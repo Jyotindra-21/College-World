@@ -6,11 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".ui.activitys.LoginActivity">
 
+
+    <ProgressBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:id="@+id/processLog"
+        android:visibility="gone"/>
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/crop" />
+        android:src="@drawable/crop"
+        android:contentDescription="@string/todo" />
 
     <LinearLayout
         android:layout_width="match_parent"

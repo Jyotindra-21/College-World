@@ -1,6 +1,7 @@
 package com.example.collegeproject.utility;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
@@ -27,6 +28,13 @@ public class SosManagement {
 
     public boolean getLogin() {
         return sharedPreferences.getBoolean(Key_Login, false);
+    }
+
+    public void getLogout(){
+        SharedPreferences.Editor editor=sharedPreferences.edit();
+        editor.clear();
+        editor.apply();
+
     }
 
     public void setStreamId(String s_id) {

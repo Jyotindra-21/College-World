@@ -10,7 +10,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
@@ -20,6 +19,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -50,7 +50,7 @@ import static android.content.Context.MODE_PRIVATE;
 public class ProfileLoaderFragment extends Fragment {
 
     EditText name, email, phone, date, gender, city;
-    String names, emails, phones, dates, genderr, citys;
+    String names, emails, phones, dates, genderr, citys, profile;
     TextView edit, update;
     public static final String PREF = "1";
     FloatingActionButton camera;
@@ -58,6 +58,7 @@ public class ProfileLoaderFragment extends Fragment {
     int day, month, year;
     String imagetitle;
     Uri imageUri;
+    ProgressBar progressBar;
     CircleImageView profileImage;
     final int PICK_IMAGE = 110;
 
@@ -77,6 +78,7 @@ public class ProfileLoaderFragment extends Fragment {
         camera = view.findViewById(R.id.camera);
         update = view.findViewById(R.id.updatepro);
         profileImage = view.findViewById(R.id.profileImage);
+        progressBar = view.findViewById(R.id.processProfile);
 
         date.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
@@ -91,7 +93,6 @@ public class ProfileLoaderFragment extends Fragment {
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(),
                         new DatePickerDialog.OnDateSetListener() {
-
 
                             @SuppressLint("SetTextI18n")
                             @Override
@@ -110,7 +111,10 @@ public class ProfileLoaderFragment extends Fragment {
         update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 imgUpload();
+                updateReviewImage();
+                SetObjectsFocusable(false);
 
                 HashMap<String, String> hashMap = new HashMap<>();
                 hashMap.put("type", "updateProfile");
@@ -129,19 +133,22 @@ public class ProfileLoaderFragment extends Fragment {
                     @Override
                     public boolean setResponse(String responseStr) {
                         try {
+                            progressBar.setVisibility(View.VISIBLE);
                             JSONObject reader = new JSONObject(responseStr);
                             if (reader.getString("action").equals("1")) {
+                                progressBar.setVisibility(View.INVISIBLE);
                                 Toast.makeText(getContext(), "Update Profile Successfully", Toast.LENGTH_SHORT).show();
                             } else {
+                                progressBar.setVisibility(View.INVISIBLE);
                                 Toast.makeText(getContext(), "something Wrong", Toast.LENGTH_SHORT).show();
                             }
                         } catch (JSONException e) {
-                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getContext(), "Network Problem\nCheck Your Internet", Toast.LENGTH_SHORT).show();
                         }
                         return false;
                     }
                 });
-                SetObjectsFocusable(false);
 
             }
         });
@@ -154,7 +161,6 @@ public class ProfileLoaderFragment extends Fragment {
                 edit.setVisibility(View.INVISIBLE);
                 update.setVisibility(View.VISIBLE);
                 camera.setVisibility(View.VISIBLE);
-
                 name.setFocusable(true);
                 name.setFocusableInTouchMode(true);
                 email.setFocusable(true);
@@ -180,19 +186,14 @@ public class ProfileLoaderFragment extends Fragment {
                 RequestPermisions r1 = new RequestPermisions(Manifest.permission.WRITE_EXTERNAL_STORAGE,
                         112, getActivity());
                 if (r.checkPermission() && r1.checkPermission()) {
-//                   Intent gallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.INTERNAL_CONTENT_URI);
-//                 startActivityForResult(gallery, PICK_IMAGE);
-                    startActivityForResult(ImagePicker.getPickImageIntent(getActivity()), PICK_IMAGE);
+                    startActivityForResult(ImagePicker.getPickImageIntent(getContext()), PICK_IMAGE);
                 } else {
                     if (!r.checkPermission())
                         r.getPermission();
                     if (!r1.checkPermission())
                         r1.getPermission();
                 }
-
-
             }
-
         });
 
 
@@ -201,29 +202,31 @@ public class ProfileLoaderFragment extends Fragment {
         return view;
     }
 
-    private void SetObjectsFocusable(Boolean b) {
-        gender.setFocusable(b);
-        gender.setFocusableInTouchMode(b);
-        phone.setFocusable(b);
-        phone.setFocusableInTouchMode(b);
-        name.setFocusable(b);
-        name.setFocusableInTouchMode(b);
+    @SuppressLint("RestrictedApi")
+    private void SetObjectsFocusable(boolean b) {
+        gender.setFocusable(false);
+        gender.setFocusableInTouchMode(false);
+        phone.setFocusable(false);
+        phone.setFocusableInTouchMode(false);
+        name.setFocusable(false);
+        name.setFocusableInTouchMode(false);
 
-        email.setFocusable(b);
-        email.setFocusableInTouchMode(b);
+        email.setFocusable(false);
+        email.setFocusableInTouchMode(false);
 
-        city.setFocusable(b);
-        city.setFocusableInTouchMode(b);
+        city.setFocusable(false);
+        city.setFocusableInTouchMode(false);
 
-        date.setFocusable(b);
-        date.setFocusableInTouchMode(b);
+        date.setFocusable(false);
+        date.setFocusableInTouchMode(false);
 
         edit.setVisibility(View.VISIBLE);
         if (b) {
             update.setVisibility(View.VISIBLE);
+            camera.setVisibility(View.VISIBLE);
         } else {
             update.setVisibility(View.GONE);
-
+            camera.setVisibility(View.GONE);
         }
     }
 
@@ -232,46 +235,37 @@ public class ProfileLoaderFragment extends Fragment {
         // long id = 1;
         Date currenttime = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
-        imagetitle = df.format(currenttime.getTime());
+        String imagetitle = df.format(currenttime.getTime());
 
         Master_Upload master_upload = new Master_Upload();
-        JSONObject jsonObject = master_upload.Master_Upload(imageUri, getActivity(),
-                imagetitle, ".jpeg", utils_string.IMAGE_URL.USER_PROFILE);
-
+        JSONObject jsonObject = master_upload.Master_Upload(imageUri, getActivity(), imagetitle, ".jpeg",
+                utils_string.IMAGE_URL.USER_PROFILE);
 
         try {
             if (jsonObject.getString("action").equals("1")) {
                 HashMap<String, String> params = new HashMap<>();
-                params.put("type","AddImages");
-
-                SharedPreferences sharedPreferences=getContext().getSharedPreferences(PREF,MODE_PRIVATE);
-                uid=sharedPreferences.getString("student_id","1");
+                params.put("type", "AddImages");
+                SharedPreferences sharedPreferences = getContext().getSharedPreferences(PREF, MODE_PRIVATE);
+                uid = sharedPreferences.getString("student_id", "1");
                 params.put("student_id", uid);
                 params.put("profile", imagetitle + ".jpeg");
-                Toast.makeText(getActivity(), uid, Toast.LENGTH_SHORT).show();
 
                 NetworkCall.call(params).setDataResponseListener(new NetworkCall.SetDataResponse() {
                     @Override
                     public boolean setResponse(String responseStr) {
                         try {
-
+                            progressBar.setVisibility(View.VISIBLE);
                             JSONObject reader = new JSONObject(responseStr);
                             if (reader.getString("action").equals("1")) {
-
+                                progressBar.setVisibility(View.INVISIBLE);
                                 Toast.makeText(getContext(), "Image Uploaded ! ", Toast.LENGTH_SHORT).show();
-                                /*Intent returnIntent = new Intent(ProfileActivity.this,SettingActivity.class);
-                                setResult(Activity.RESULT_OK, returnIntent);
-                                startActivity(returnIntent);
-                                finish();*/
-                                // Toast.makeText(ProfileActivity.this, "Registered !!!", Toast.LENGTH_LONG).show();
-                                //  Intent i = new Intent(CreateCardActivity.this, CardDesignActivity.class);
-                                //i.putExtra("email", semail);
-                                // startActivity(i);
                             } else {
+                                progressBar.setVisibility(View.INVISIBLE);
                                 Toast.makeText(getContext(), "There was some problem in Registering.", Toast.LENGTH_SHORT).show();
                             }
                         } catch (Exception e) {
-                            Toast.makeText(getContext(), "network issue" + responseStr, Toast.LENGTH_SHORT).show();
+                            progressBar.setVisibility(View.INVISIBLE);
+                            Toast.makeText(getContext(), "Don't use Gallery to Upload Image\n other Not available yet ", Toast.LENGTH_SHORT).show();
                         }
                         return false;
                     }
@@ -283,8 +277,9 @@ public class ProfileLoaderFragment extends Fragment {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == PICK_IMAGE) {
             imageUri = data.getData();
@@ -294,14 +289,10 @@ public class ProfileLoaderFragment extends Fragment {
                         (getActivity().getContentResolver()
                                 , bitmap1, "testImg1", null);
 
-//                uploadImage(finalUri);
-                //   clUpload.setVisibility(View.VISIBLE);
                 profileImage.setImageBitmap(bitmap1);
-//                imageView_user.setImageBitmap(bitmap1);
-//                imageView_user.setBlur(5);
 
             } catch (Exception e) {
-                Toast.makeText(getContext(), "Catch:" + e, Toast.LENGTH_LONG).show();
+                Toast.makeText(getContext(), "ADD On Image" + e, Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -312,24 +303,48 @@ public class ProfileLoaderFragment extends Fragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PREF, MODE_PRIVATE);
         uid = sharedPreferences.getString("student_id", "1");
         param.put("student_id", uid);
-        Toast.makeText(getContext(), uid + "", Toast.LENGTH_SHORT).show();
         NetworkCall.call(param).setDataResponseListener(new NetworkCall.SetDataResponse() {
             @Override
             public boolean setResponse(String responseStr) {
 
                 try {
                     JSONObject userProfile = jsn.getJSONObjectAt0(responseStr);
-
                     if (jsn.checkResponseStr(responseStr)) {
                         Glide.with(getActivity()).load(utils_string.BASE_URL + utils_string.IMAGE_URL.USER_PROFILE +
                                 userProfile.getString("profile")).into(profileImage);
+                        profile = userProfile.getString("profile");
+
                     } else {
                         Toast.makeText(getContext(), "not get profile image", Toast.LENGTH_SHORT).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(getContext(), "getImage:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Glide.with(getActivity()).load(R.drawable.clglogo).into(profileImage);
+                    Toast.makeText(getContext(), "Upload Your Profile Image", Toast.LENGTH_SHORT).show();
                 }
 
+                return false;
+            }
+        });
+
+    }
+
+    private void updateReviewImage() {
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("type", "updateReviewProfile");
+        hashMap.put("student_id", uid);
+        hashMap.put("profile", profile);
+
+        NetworkCall.call(hashMap).setDataResponseListener(new NetworkCall.SetDataResponse() {
+            @Override
+            public boolean setResponse(String responseStr) {
+                try {
+                    JSONObject reader = new JSONObject(responseStr);
+                    if (reader.getString("action").equals("1")) {
+                        Toast.makeText(getContext(), "Update ReviewProfile Successfully", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(getContext(), "updateReviewProfile" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                }
                 return false;
             }
         });
@@ -346,10 +361,10 @@ public class ProfileLoaderFragment extends Fragment {
         NetworkCall.call(param).setDataResponseListener(new NetworkCall.SetDataResponse() {
             @Override
             public boolean setResponse(String responseStr) {
+                progressBar.setVisibility(View.VISIBLE);
                 if (jsn.checkResponseStr(responseStr)) {
                     JSONObject userdetails = jsn.getJSONObjectAt0(responseStr);
                     try {
-
                         names = userdetails.getString("name");
                         emails = userdetails.getString("email");
                         phones = userdetails.getString("mobile");
@@ -364,13 +379,15 @@ public class ProfileLoaderFragment extends Fragment {
                         gender.setText(genderr);
                         city.setText(citys);
 
-
+                        progressBar.setVisibility(View.INVISIBLE);
                     } catch (Exception e) {
-                        Toast.makeText(getContext(), "Catch1:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        Toast.makeText(getContext(), "Network Problem\nCheck Your Internet", Toast.LENGTH_SHORT).show();
                     }
                 }
                 return false;
             }
         });
     }
+
 }

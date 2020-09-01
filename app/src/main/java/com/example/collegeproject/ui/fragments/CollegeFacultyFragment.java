@@ -9,6 +9,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +35,8 @@ public class CollegeFacultyFragment extends Fragment {
     ArrayList<FacultyModule> list = new ArrayList<>();
     String name, clg_id;
     TextView faculty;
+    ImageView imageView;
+    ProgressBar progressBar;
     RecyclerView recyclerView;
 
     @Override
@@ -43,6 +47,8 @@ public class CollegeFacultyFragment extends Fragment {
         recyclerView = view.findViewById(R.id.facultyDetail);
         name = getActivity().getIntent().getExtras().getString("clg_name");
         faculty.setText(name);
+        progressBar = view.findViewById(R.id.processFaculty);
+        imageView = view.findViewById(R.id.facultyNoData);
 
         clg_id = new SosManagement(getContext()).getCollegeId();
 
@@ -58,18 +64,23 @@ public class CollegeFacultyFragment extends Fragment {
             @Override
             public boolean setResponse(String responseStr) {
                 try {
+                    progressBar.setVisibility(View.VISIBLE);
+                    imageView.setVisibility(View.GONE);
                     JSONObject r = new JSONObject(responseStr);
                     FacultyResponse response = new Gson().fromJson(responseStr, FacultyResponse.class);
                     if (response.action == 1) {
                         list.addAll(response.message);
                         FacultyAdapter adapter = new FacultyAdapter(getContext(), list);
                         recyclerView.setAdapter(adapter);
-                        Toast.makeText(getContext(), "Get Data For Faculty", Toast.LENGTH_SHORT).show();
+                        progressBar.setVisibility(View.INVISIBLE);
                     } else {
+                        progressBar.setVisibility(View.INVISIBLE);
                         Toast.makeText(getContext(), "Something Wrong", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
-                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    progressBar.setVisibility(View.INVISIBLE);
+                    imageView.setVisibility(View.VISIBLE);
+                    //Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }

@@ -11,9 +11,12 @@ import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.media.ExifInterface;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.util.Log;
+
+import androidx.annotation.RequiresApi;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -21,15 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/**
- * Author: Mario Velasco Casquero
- * Date: 08/09/2015
- * Email: m3ario@gmail.com
- * <p>
- * EditAuthor: var2611
- * Date: 26/10/2018
- * Email: var2611@gmial.com
- */
+
 public class ImagePicker {
 
     private static final int DEFAULT_MIN_WIDTH_QUALITY = 400;        // min pixels
@@ -47,8 +42,8 @@ public class ImagePicker {
         Intent pickIntent = new Intent(Intent.ACTION_PICK,
                 MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        takePhotoIntent.putExtra("return-data", true);
-//        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(getTempFile(context)));
+       // takePhotoIntent.putExtra("return-data", true);
+        //takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(getTempFile(context)));
         intentList = addIntentsToList(context, intentList, pickIntent);
         intentList = addIntentsToList(context, intentList, takePhotoIntent);
 
@@ -74,6 +69,7 @@ public class ImagePicker {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     public static Bitmap getImageFromResult(Context context, int resultCode,
                                             Intent intentData) {
         Log.d(TAG, "getImageFromResult, resultCode: " + resultCode);
@@ -143,6 +139,7 @@ public class ImagePicker {
     }
 
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     private static int getRotation(Context context, Uri imageUri, boolean isCamera) {
         int rotation;
         if (isCamera) {
@@ -181,6 +178,7 @@ public class ImagePicker {
         return rotate;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.Q)
     public static int getRotationFromGallery(Context context, Uri imageUri) {
         int result = 0;
         String[] columns = {MediaStore.Images.Media.ORIENTATION};

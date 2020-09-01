@@ -2,19 +2,27 @@ package com.example.collegeproject.ui.fragments;
 
 
 import android.app.Dialog;
+import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.os.Handler;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -47,17 +55,20 @@ import java.util.HashMap;
 import java.util.List;
 
 import static android.content.Context.MODE_PRIVATE;
+import static android.os.Handler.*;
 
 public class MoreInfoFragment extends Fragment {
 
     RecyclerView userReviews;
     Button min, max, reviewSubmit;
     ArrayList<ReviewModule> list = new ArrayList<>();
-    HashMap<ReviewModule, List<String>> listHashMap;
     EditText clgDescription;
     Spinner reSpinner;
     RatingBar ratingBar;
-    String uid, clgid, name, date, profiles, getRatingBar, clgname;
+    String uid, clgid, name, profiles, date, clgname;
+    Float getRatingBar;
+    ProgressBar progressBar;
+    ImageView imageView;
     Dialog dialog;
     ArrayList<HomeModule> modulesList = new ArrayList<>();
     public static final String PREF = "1";
@@ -71,6 +82,8 @@ public class MoreInfoFragment extends Fragment {
         userReviews = view.findViewById(R.id.userReview);
         min = view.findViewById(R.id.addReviewMin);
         max = view.findViewById(R.id.addReviewMax);
+        imageView = view.findViewById(R.id.reviewNoData);
+        progressBar = view.findViewById(R.id.processReview);
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(RecyclerView.VERTICAL);
@@ -78,15 +91,16 @@ public class MoreInfoFragment extends Fragment {
 
         clgid = new SosManagement(getContext()).getCollegeId();
 
-        getReview();
 
-        if (list.size() > 0) {
-            max.setVisibility(View.VISIBLE);
-            min.setVisibility(View.INVISIBLE);
-        } else {
-            min.setVisibility(View.VISIBLE);
+        if (list == null) {
             max.setVisibility(View.INVISIBLE);
+            min.setVisibility(View.VISIBLE);
+
+        } else {
+            min.setVisibility(View.INVISIBLE);
+            max.setVisibility(View.VISIBLE);
         }
+
 
         max.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,14 +118,19 @@ public class MoreInfoFragment extends Fragment {
             public void onClick(View view) {
                 try {
                     Dialog();
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
         });
 
+        getReview();
+        list.clear();
+
         return view;
     }
+
 
     //review Dialogs Call
     private void Dialog() throws ParseException {
@@ -126,49 +145,54 @@ public class MoreInfoFragment extends Fragment {
 
         dialog.setCanceledOnTouchOutside(false);
 
-
-        getRatingBar = String.valueOf(ratingBar.getRating());
-
         Date currenttime = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
         date = df.format(currenttime.getTime());
-
-
+        getUserImage();
+        //add review
         reviewSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Toast.makeText(getContext(), "" + getRatingBar, Toast.LENGTH_SHORT).show();
+                if (validation()) {
+                    getRatingBar = ratingBar.getRating();
+                    HashMap<String, String> hashMap = new HashMap<>();
+                    hashMap.put("type", "addReview");
+                    hashMap.put("clg_id", clgid);
+                    hashMap.put("name", name);
+                    hashMap.put("profile", profiles);
+                    hashMap.put("student_id", uid);
+                    hashMap.put("clg_name", clgname);
+                    hashMap.put("description", clgDescription.getText().toString().trim());
+                    hashMap.put("ratting", getRatingBar.toString());
+                    hashMap.put("rdate", date);
+                    NetworkCall.call(hashMap).setDataResponseListener(new NetworkCall.SetDataResponse() {
+                        @Override
+                        public boolean setResponse(String responseStr) {
 
-                HashMap<String, String> hashMap = new HashMap<>();
-                hashMap.put("type", "addReview");
-                hashMap.put("clg_id", clgid);
-                hashMap.put("student_id", uid);
-                hashMap.put("profile", profiles);
-                hashMap.put("clg_name", clgname);
-                hashMap.put("description", clgDescription.getText().toString().trim());
-                hashMap.put("ratting", getRatingBar);
-                hashMap.put("rdate", date);
+                            try {
+                                JSONObject reader = new JSONObject(responseStr);
+                                if (reader.getString("action").equals("1")) {
+                                    Toast.makeText(getContext(), "Your Review Added", Toast.LENGTH_SHORT).show();
+                                    dialog.dismiss();
+                                    getReview();
+                                    list.clear();
+                                } else {
+                                    Toast.makeText(getContext(), "some thing is wrong", Toast.LENGTH_SHORT).show();
 
-                NetworkCall.call(hashMap).setDataResponseListener(new NetworkCall.SetDataResponse() {
-                    @Override
-                    public boolean setResponse(String responseStr) {
-
-                        try {
-                            JSONObject reader = new JSONObject(responseStr);
-                            if (reader.getString("action").equals("1")) {
-                                Toast.makeText(getContext(), "Your Review Added", Toast.LENGTH_SHORT).show();
+                                }
+                            } catch (JSONException e) {
+                                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                             }
-                        } catch (JSONException e) {
-                            Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
 
-                        return false;
-                    }
-                });
+                            return false;
+                        }
+                    });
+                }
             }
         });
 
+        //get profile detail
         HashMap<String, String> param = new HashMap<>();
         param.put("type", "getProfile");
         param.put("student_id", uid);
@@ -176,9 +200,9 @@ public class MoreInfoFragment extends Fragment {
             @Override
             public boolean setResponse(String responseStr) {
                 if (jsn.checkResponseStr(responseStr)) {
-                    JSONObject userdetails = jsn.getJSONObjectAt0(responseStr);
+                    JSONObject userDetails = jsn.getJSONObjectAt0(responseStr);
                     try {
-                        name = userdetails.getString("name");
+                        name = userDetails.getString("name");
                     } catch (Exception e) {
                         Toast.makeText(getContext(), "Catch1:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -220,31 +244,12 @@ public class MoreInfoFragment extends Fragment {
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(getContext(), "catchJson:" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "getCollegeName:" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
         });
 
-        HashMap<String, String> param1 = new HashMap<>();
-        param.put("type", "getImageuserProfile");
-        param.put("student_id", uid);
-        Toast.makeText(getContext(), uid + "", Toast.LENGTH_SHORT).show();
-        NetworkCall.call(param1).setDataResponseListener(new NetworkCall.SetDataResponse() {
-            @Override
-            public boolean setResponse(String responseStr) {
-
-                if (jsn.checkResponseStr(responseStr)) {
-                    JSONObject userdetails = jsn.getJSONObjectAt0(responseStr);
-                    try {
-                        profiles = userdetails.getString("profile");
-                    } catch (Exception e) {
-                        Toast.makeText(getContext(), "getImage:" + e.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                }
-                return false;
-            }
-        });
 
         back.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -257,6 +262,35 @@ public class MoreInfoFragment extends Fragment {
     }
 
 
+    private void getUserImage() {
+        HashMap<String, String> param = new HashMap<>();
+        param.put("type", "getImageuserProfile");
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PREF, MODE_PRIVATE);
+        uid = sharedPreferences.getString("student_id", "1");
+        param.put("student_id", uid);
+        NetworkCall.call(param).setDataResponseListener(new NetworkCall.SetDataResponse() {
+            @Override
+            public boolean setResponse(String responseStr) {
+
+                try {
+                    JSONObject userProfile = jsn.getJSONObjectAt0(responseStr);
+                    if (jsn.checkResponseStr(responseStr)) {
+                        profiles = userProfile.getString("profile");
+                        Toast.makeText(getContext(), profiles, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getContext(), "not get profile image", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(getContext(), "Upload Your Profile Image", Toast.LENGTH_SHORT).show();
+                }
+
+                return false;
+            }
+        });
+
+    }
+
+    //get Review by user
     void getReview() {
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("type", "getreviewuser");
@@ -268,20 +302,37 @@ public class MoreInfoFragment extends Fragment {
             @Override
             public boolean setResponse(String responseStr) {
                 try {
+                    imageView.setVisibility(View.INVISIBLE);
+                    progressBar.setVisibility(View.VISIBLE);
                     JSONObject r = new JSONObject(responseStr);
                     ReviewResponse reviewResponse = new Gson().fromJson(responseStr, ReviewResponse.class);
                     if (reviewResponse.action == 1) {
                         list.addAll(reviewResponse.message);
-                        ReviewAdapter adapter = new ReviewAdapter(getContext(), list, listHashMap);
+                        ReviewAdapter adapter = new ReviewAdapter(getContext(), list);
                         userReviews.setAdapter(adapter);
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
-
                 } catch (JSONException e) {
-                    Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    imageView.setVisibility(View.VISIBLE);
+                    progressBar.setVisibility(View.INVISIBLE);
+                    Toast.makeText(getContext(), "getReviewUser" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
         });
 
     }
+
+    boolean validation() {
+        boolean isValid = true;
+        if (TextUtils.isEmpty(clgDescription.getText().toString())) {
+            clgDescription.setError("Please Enter Description");
+            isValid = false;
+        } else if (ratingBar.getRating() == 0.0) {
+            Toast.makeText(getContext(), "give Some Star", Toast.LENGTH_SHORT).show();
+            isValid = false;
+        }
+        return isValid;
+    }
+
 }

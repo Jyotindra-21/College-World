@@ -19,8 +19,6 @@ import com.example.collegeproject.ui.activitys.MainActivity;
 import com.example.collegeproject.utility.SosManagement;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -28,12 +26,10 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.MyViewHodl
 
     Context context;
     ArrayList<StreamModule> list;
-    HashMap<StreamModule, List<String>> listHashMap;
 
-    public StreamAdapter(Context context, ArrayList<StreamModule> list, HashMap<StreamModule, List<String>> listHashMap) {
+    public StreamAdapter(Context context, ArrayList<StreamModule> list) {
         this.context = context;
         this.list = list;
-        this.listHashMap = listHashMap;
     }
 
     @NonNull

@@ -14,288 +14,303 @@
 
         <FrameLayout
             android:layout_width="match_parent"
-            android:layout_height="250dp">
+            android:layout_height="match_parent">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:src="@drawable/bacgroundimage"/>
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/profileImage"
-                android:layout_width="120dp"
-                android:layout_height="120dp"
-                android:layout_gravity="center"
-                android:src="@drawable/clglogo"
-                app:civ_border_color="@color/black"
-                app:civ_border_width="4dp" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/camera"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="40dp"
-                app:backgroundTint="@color/white"
-                android:src="@drawable/camera"
-                app:civ_border_color="@color/black" />
-        </FrameLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="2dp"
-            android:layout_marginTop="5dp"
-            android:background="@color/background" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:orientation="vertical">
-
-            <androidx.cardview.widget.CardView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="10dp"
-                android:orientation="vertical"
-                app:cardBackgroundColor="@color/white"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="8dp"
-                app:cardUseCompatPadding="true">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/bacgroundimage" />
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/profileImage"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="25dp"
+                        android:src="@drawable/clglogo" />
+
+                    <com.google.android.material.floatingactionbutton.FloatingActionButton
+                        android:id="@+id/camera"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="40dp"
+                        android:src="@drawable/camera"
+                        android:visibility="gone"
+                        app:backgroundTint="@color/white"
+                        app:civ_border_color="@color/black" />
+                </FrameLayout>
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="20dp"
-                    android:orientation="vertical"
-                    android:padding="5dp">
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
 
-                    <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
-
-                        <TextView
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_weight="1"
-                            android:letterSpacing="0"
-                            android:padding="10dp"
-                            android:text="@string/personal_information"
-                            android:textColor="@color/whiteOrange"
-                            android:textSize="18sp" />
-
-                        <TextView
-                            android:id="@+id/editpro"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginEnd="20dp"
-                            android:drawableStart="@drawable/edit_fill"
-                            android:drawablePadding="7dp"
-                            android:letterSpacing="0"
-                            android:padding="10dp"
-                            android:text="@string/edit"
-                            android:textColor="@color/whiteOrange"
-                            android:textSize="18sp"
-                            tools:ignore="UseCompatTextViewDrawableXml" />
-
-                        <TextView
-                            android:id="@+id/updatepro"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="5dp"
-                            android:layout_marginTop="4dp"
-                            android:layout_marginEnd="20dp"
-                            android:padding="10dp"
-                            android:text="@string/update"
-                            android:textColor="#4CAF50"
-                            android:textSize="18sp"
-                            android:textStyle="bold"
-                            android:visibility="gone" />
-
-                    </LinearLayout>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:layout_marginTop="5dp"
-                        android:background="@color/background" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/name"
-                        android:textColor="@color/whiteOrange"
-                        android:textSize="20sp" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    <androidx.cardview.widget.CardView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_marginTop="5dp">
+                        android:layout_marginBottom="10dp"
+                        android:orientation="vertical"
+                        app:cardBackgroundColor="@color/white"
+                        app:cardCornerRadius="10dp"
+                        app:cardElevation="8dp"
+                        app:cardUseCompatPadding="true">
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/proname"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:textColor="@color/whiteOrange"
-                            android:textSize="20sp" />
-
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/email"
-                        android:textColor="@color/whiteOrange"
-                        android:textSize="20sp" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
-
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/proemail"
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:focusable="false"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:textColor="@color/whiteOrange"
-                            android:textSize="20sp" />
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="20dp"
+                            android:orientation="vertical"
+                            android:padding="5dp">
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/phone_no"
-                        android:textColor="@color/whiteOrange"
-                        android:textSize="20sp" />
+                                <TextView
+                                    android:layout_width="0dp"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_weight="1"
+                                    android:letterSpacing="0"
+                                    android:padding="10dp"
+                                    android:text="@string/personal_information"
+                                    android:textColor="@color/whiteOrange"
+                                    android:textSize="18sp" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:textColorHint="@color/whiteOrange">
+                                <TextView
+                                    android:id="@+id/editpro"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:drawableStart="@drawable/edit_fill"
+                                    android:drawablePadding="7dp"
+                                    android:letterSpacing="0"
+                                    android:padding="10dp"
+                                    android:text="@string/edit"
+                                    android:textColor="@color/whiteOrange"
+                                    android:textSize="18sp"
+                                    tools:ignore="UseCompatTextViewDrawableXml" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/prophone"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:focusable="false"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:textColor="@color/whiteOrange"
-                            android:textSize="20sp" />
+                                <TextView
+                                    android:id="@+id/updatepro"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="5dp"
+                                    android:layout_marginTop="4dp"
+                                    android:layout_marginEnd="20dp"
+                                    android:padding="10dp"
+                                    android:text="@string/update"
+                                    android:textColor="#4CAF50"
+                                    android:textSize="18sp"
+                                    android:textStyle="bold"
+                                    android:visibility="gone" />
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                            </LinearLayout>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/date_of_birth"
-                        android:textColor="@color/whiteOrange"
-                        android:textSize="20sp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="2dp"
+                                android:layout_marginTop="5dp"
+                                android:background="@color/background" />
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/name"
+                                android:textColor="@color/whiteOrange"
+                                android:textSize="20sp" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/prodate"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:inputType="text"
-                            android:focusable="false"
-                            android:maxLines="1"
-                            android:textColor="@color/whiteOrange"
-                            android:textSize="20sp" />
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginTop="5dp">
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/proname"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:focusable="false"
+                                    android:inputType="text"
+                                    android:maxLines="1"
+                                    android:textColor="@color/whiteOrange"
+                                    android:textSize="20sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/gender"
-                        android:textColor="@color/whiteOrange"
-                        android:textSize="20sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/email"
+                                android:textColor="@color/whiteOrange"
+                                android:textSize="20sp" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/progender"
-                            android:layout_width="match_parent"
-                            android:focusable="false"
-                            android:layout_height="match_parent"
-                            android:inputType="text"
-                            android:textSize="20sp"
-                            android:maxLines="1"
-                            android:textColor="@color/whiteOrange" />
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp">
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/proemail"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:focusable="false"
+                                    android:inputType="text"
+                                    android:maxLines="1"
+                                    android:textColor="@color/whiteOrange"
+                                    android:textSize="20sp" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:layout_marginTop="8dp"
-                        android:text="@string/city"
-                        android:textColor="@color/whiteOrange"
-                        android:textSize="20sp" />
+                            </com.google.android.material.textfield.TextInputLayout>
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:textColorHint="@color/whiteOrange">
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/phone_no"
+                                android:textColor="@color/whiteOrange"
+                                android:textSize="20sp" />
 
-                        <com.google.android.material.textfield.TextInputEditText
-                            android:id="@+id/procity"
-                            android:layout_width="match_parent"
-                            android:focusable="false"
-                            android:layout_height="match_parent"
-                            android:inputType="text"
-                            android:maxLines="1"
-                            android:textSize="20sp"
-                            android:textColor="@color/whiteOrange" />
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:textColorHint="@color/whiteOrange">
 
-                    </com.google.android.material.textfield.TextInputLayout>
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/prophone"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:focusable="false"
+                                    android:inputType="text"
+                                    android:maxLines="1"
+                                    android:textColor="@color/whiteOrange"
+                                    android:textSize="20sp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/date_of_birth"
+                                android:textColor="@color/whiteOrange"
+                                android:textSize="20sp" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/prodate"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:focusable="false"
+                                    android:focusableInTouchMode="false"
+                                    android:inputType="text"
+                                    android:maxLines="1"
+                                    android:textColor="@color/whiteOrange"
+                                    android:textSize="20sp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/gender"
+                                android:textColor="@color/whiteOrange"
+                                android:textSize="20sp" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/progender"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:focusable="false"
+                                    android:inputType="text"
+                                    android:maxLines="1"
+                                    android:textColor="@color/whiteOrange"
+                                    android:textSize="20sp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="5dp"
+                                android:layout_marginTop="8dp"
+                                android:text="@string/city"
+                                android:textColor="@color/whiteOrange"
+                                android:textSize="20sp" />
+
+                            <com.google.android.material.textfield.TextInputLayout
+                                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="5dp"
+                                android:textColorHint="@color/whiteOrange">
+
+                                <com.google.android.material.textfield.TextInputEditText
+                                    android:id="@+id/procity"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:focusable="false"
+                                    android:inputType="text"
+                                    android:maxLines="1"
+                                    android:textColor="@color/whiteOrange"
+                                    android:textSize="20sp" />
+
+                            </com.google.android.material.textfield.TextInputLayout>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
 
                 </LinearLayout>
 
-            </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
-        </LinearLayout>
+            <ProgressBar
+                android:id="@+id/processProfile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+        </FrameLayout>
 
     </LinearLayout>
 

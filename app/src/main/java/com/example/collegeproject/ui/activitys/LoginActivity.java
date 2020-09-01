@@ -10,6 +10,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -32,8 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     TextInputLayout passwordLay;
     Button button;
     CheckBox box;
-    String sid;
-    public final static String PREF="1";
+    ProgressBar processLog;
+    public final static String PREF = "1";
     TextView user, signup;
 
     @Override
@@ -48,13 +49,14 @@ public class LoginActivity extends AppCompatActivity {
         passwordLay = findViewById(R.id.passwordLayout);
         signup = findViewById(R.id.log_sign);
         box = findViewById(R.id.remember);
-
+        processLog = findViewById(R.id.processLog);
 
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (new ConnectionCall(LoginActivity.this).connectiondetect()) {
+                    processLog.setVisibility(View.VISIBLE);
                     if (validation()) {
 
                         HashMap<String, String> hashMap = new HashMap<>();
@@ -70,22 +72,23 @@ public class LoginActivity extends AppCompatActivity {
                                 try {
                                     JSONObject reader = new JSONObject(responseStr);
                                     if (reader.getString("action").equals("1")) {
-
+                                        processLog.setVisibility(View.GONE);
                                         JSONObject cat = jsn.getJSONObjectAt0(responseStr);
                                         SharedPreferences.Editor share;
-                                        share=getSharedPreferences(PREF,MODE_PRIVATE).edit();
-                                        share.putString("email",email.getText().toString());
-                                        share.putString("student_id",cat.getString("student_id"));
+                                        share = getSharedPreferences(PREF, MODE_PRIVATE).edit();
+                                        share.putString("email", email.getText().toString());
+                                        share.putString("student_id", cat.getString("student_id"));
                                         share.apply();
-
-                                        Toast.makeText(LoginActivity.this, "Login Successfully" , Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(LoginActivity.this, "Login Successfully", Toast.LENGTH_SHORT).show();
                                         Intent intent = new Intent(LoginActivity.this, StreamActivity.class);
                                         startActivity(intent);
+                                        finish();
                                     }
                                 } catch (Exception e) {
-                                    Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                    processLog.setVisibility(View.GONE);
+                                    Toast.makeText(LoginActivity.this, "Check Your Login Id", Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                                 }
-
                                 return true;
                             }
                         });

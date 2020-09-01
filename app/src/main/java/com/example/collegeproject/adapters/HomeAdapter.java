@@ -18,8 +18,11 @@ import com.example.collegeproject.R;
 import com.example.collegeproject.databasecall.NetworkCall;
 import com.example.collegeproject.databasecall.utils_string;
 import com.example.collegeproject.module.HomeModule;
+import com.example.collegeproject.module.WishListModule;
+import com.example.collegeproject.responsemodule.WishListResponse;
 import com.example.collegeproject.ui.layout.CollegeViewLoaderActivity;
 import com.example.collegeproject.utility.SosManagement;
+import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -33,13 +36,13 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
 
     Context context;
     ArrayList<HomeModule> list;
-    HashMap<HomeModule, List<String>> listHashMap;
+
     public static String PREF = "1";
 
-    public HomeAdapter(Context context, ArrayList<HomeModule> list, HashMap<HomeModule, List<String>> listHashMap) {
+    public HomeAdapter(Context context, ArrayList<HomeModule> list) {
         this.context = context;
         this.list = list;
-        this.listHashMap = listHashMap;
+
     }
 
     @NonNull
@@ -71,24 +74,19 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
                 hashMap.put("clg_name", module.clg_name);
                 hashMap.put("profile", module.profile);
                 hashMap.put("clg_id", module.clg_id);
-
                 NetworkCall.call(hashMap).setDataResponseListener(new NetworkCall.SetDataResponse() {
                     @Override
                     public boolean setResponse(String responseStr) {
                         try {
-                            holder.wishList.setImageResource(R.drawable.ic_favorite);
+
                             JSONObject reader = new JSONObject(responseStr);
                             if (reader.getString("action").equals("1")) {
-
                                 Toast.makeText(context, "Wish List Add", Toast.LENGTH_LONG).show();
                             } else {
                                 Toast.makeText(context, "something wrong", Toast.LENGTH_LONG).show();
-
-                               // holder.wishList.setImageResource(R.drawable.ic_wish_list);
                             }
                         } catch (Exception e) {
                             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            holder.wishList.setImageResource(R.drawable.ic_wish_list);
                         }
 
                         return false;

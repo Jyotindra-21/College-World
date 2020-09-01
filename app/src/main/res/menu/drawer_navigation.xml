@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/changeCourse"
+            android:icon="@drawable/topcollege"
+            android:title="@string/change_course" />
+
+        <item
+            android:id="@+id/wishList"
+            android:icon="@drawable/favorite"
+            android:title="@string/wish_list" />
+
+        <item
+            android:id="@+id/review"
+            android:icon="@drawable/message_draw"
+            android:title="@string/reviews" />
+
+        <item
+            android:id="@+id/ratting"
+            android:icon="@drawable/star_half_full"
+            android:title="@string/rating" />
+
+        <item
+            android:id="@+id/share"
+            android:icon="@drawable/share_variant"
+            android:title="@string/share" />
+
+        <item
+            android:id="@+id/exit"
+            android:icon="@drawable/logout"
+            android:title="@string/log_out" />
+
+    </group>
+
+
+</menu>
