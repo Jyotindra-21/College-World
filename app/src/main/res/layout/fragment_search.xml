@@ -5,11 +5,39 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragments.SearchFragment">
 
-    <TextView
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <SearchView
+            android:id="@+id/searchView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:queryHint="Search Here"
+            android:iconifiedByDefault="false" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/searchRecycleView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:id="@+id/noDataSearch"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/error_page"
+        android:visibility="gone" />
+
+    <ProgressBar
+        android:id="@+id/processSearch"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Search"
-        android:textSize="60dp" />
+        android:visibility="gone" />
 
 </FrameLayout>

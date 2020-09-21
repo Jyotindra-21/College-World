@@ -16,7 +16,6 @@ import android.widget.AdapterViewFlipper;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -127,8 +126,16 @@ public class CollegeViewFragment extends Fragment {
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(RecyclerView.VERTICAL);
         reviewView.setLayoutManager(manager);
+
+        LinearLayoutManager manager1 = new LinearLayoutManager(getContext());
+        manager.setOrientation(RecyclerView.VERTICAL);
+        courseAndFree.setLayoutManager(manager1);
+
+        courseList.clear();
+        reviewList.clear();
         getReview();
 
+        getCourse();
 
         return view;
 
@@ -147,17 +154,21 @@ public class CollegeViewFragment extends Fragment {
                     JSONObject r = new JSONObject(responseStr);
                     CourseAndFeeResponse courseResponse = new Gson().fromJson(responseStr, CourseAndFeeResponse.class);
                     if (courseResponse.action == 1) {
+                        courseList.addAll(courseResponse.message);
                         CourseAndFeeAdapter adapter = new CourseAndFeeAdapter(getContext(), courseList);
                         courseAndFree.setAdapter(adapter);
+                    } else {
+                        Toast.makeText(getContext(), "something wrong", Toast.LENGTH_SHORT).show();
                     }
 
                 } catch (JSONException e) {
-                    Toast.makeText(getContext(), "getCourse" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(), "getCourse" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
         });
     }
+
 
     //apply Button
     private void Dialog() {

@@ -57,4 +57,14 @@ public class SosManagement {
         return sharedPreferences.getString("clg_id", "-1");
     }
 
+    public void setCoId(String co_id) {
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("co_id", co_id);
+        editor.apply();
+    }
+
+    public String getCoId() {
+        return sharedPreferences.getString("co_id", "-1");
+    }
+
 }

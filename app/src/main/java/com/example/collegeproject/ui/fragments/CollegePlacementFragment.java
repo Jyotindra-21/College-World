@@ -53,6 +53,8 @@ public class CollegePlacementFragment extends Fragment {
         recyclerView.setLayoutManager(manager);
         clg_id = new SosManagement(getContext()).getCollegeId();
 
+        list.clear();
+        processPlace.setVisibility(View.VISIBLE);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("type", "placement");
         hashMap.put("clg_id", clg_id);
@@ -65,7 +67,7 @@ public class CollegePlacementFragment extends Fragment {
             public boolean setResponse(String responseStr) {
                 try {
                     imageView.setVisibility(View.INVISIBLE);
-                    processPlace.setVisibility(View.VISIBLE);
+
                     JSONObject reader = new JSONObject(responseStr);
                     PlacementResponse placementResponse = new Gson().fromJson(responseStr, PlacementResponse.class);
                     if (placementResponse.action == 1) {

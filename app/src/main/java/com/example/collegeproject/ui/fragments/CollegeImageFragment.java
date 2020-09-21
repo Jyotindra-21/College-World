@@ -55,7 +55,7 @@ public class CollegeImageFragment extends Fragment {
         list.clear();
 
         clg_id = new SosManagement(getContext()).getCollegeId();
-
+        progressBar.setVisibility(View.VISIBLE);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("type", "getImage");
         hashMap.put("clg_id", clg_id);
@@ -64,7 +64,6 @@ public class CollegeImageFragment extends Fragment {
             @Override
             public boolean setResponse(String responseStr) {
                 try {
-                    progressBar.setVisibility(View.VISIBLE);
                     imageView.setVisibility(View.INVISIBLE);
                     JSONObject r = new JSONObject(responseStr);
                     ImageResponse response = new Gson().fromJson(responseStr, ImageResponse.class);

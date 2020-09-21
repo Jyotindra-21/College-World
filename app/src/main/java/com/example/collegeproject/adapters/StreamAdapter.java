@@ -69,7 +69,6 @@ public class StreamAdapter extends RecyclerView.Adapter<StreamAdapter.MyViewHodl
                 @Override
                 public void onClick(View view) {
                     StreamModule module=list.get(getAdapterPosition());
-                    Toast.makeText(context, ""+module.s_id, Toast.LENGTH_SHORT).show();
                     Intent i=new Intent(context, MainActivity.class);
                     new SosManagement(context).setStreamId(module.s_id);
                     context.startActivity(i);

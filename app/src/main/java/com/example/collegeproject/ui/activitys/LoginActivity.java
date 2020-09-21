@@ -33,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     TextInputLayout passwordLay;
     Button button;
     CheckBox box;
+    TextView fpassword;
     ProgressBar processLog;
     public final static String PREF = "1";
     TextView user, signup;
@@ -50,15 +51,15 @@ public class LoginActivity extends AppCompatActivity {
         signup = findViewById(R.id.log_sign);
         box = findViewById(R.id.remember);
         processLog = findViewById(R.id.processLog);
+        fpassword = findViewById(R.id.fpassword);
 
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (new ConnectionCall(LoginActivity.this).connectiondetect()) {
-                    processLog.setVisibility(View.VISIBLE);
                     if (validation()) {
-
+                        processLog.setVisibility(View.VISIBLE);
                         HashMap<String, String> hashMap = new HashMap<>();
                         hashMap.put("type", "login");
 
@@ -72,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                                 try {
                                     JSONObject reader = new JSONObject(responseStr);
                                     if (reader.getString("action").equals("1")) {
-                                        processLog.setVisibility(View.GONE);
+                                        processLog.setVisibility(View.INVISIBLE);
                                         JSONObject cat = jsn.getJSONObjectAt0(responseStr);
                                         SharedPreferences.Editor share;
                                         share = getSharedPreferences(PREF, MODE_PRIVATE).edit();
@@ -85,14 +86,13 @@ public class LoginActivity extends AppCompatActivity {
                                         finish();
                                     }
                                 } catch (Exception e) {
-                                    processLog.setVisibility(View.GONE);
-                                    Toast.makeText(LoginActivity.this, "Check Your Login Id", Toast.LENGTH_SHORT).show();
-                                    //Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                                }
-                                return true;
+                                processLog.setVisibility(View.INVISIBLE);
+                                Toast.makeText(LoginActivity.this, "Check Your Login Id", Toast.LENGTH_SHORT).show();
+                                //Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                                return false;
                             }
                         });
-
                     }
                 }
             }
@@ -113,6 +113,13 @@ public class LoginActivity extends AppCompatActivity {
                 Intent i = new Intent(LoginActivity.this, RegisterActivity.class);
                 startActivity(i);
 
+            }
+        });
+        fpassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(LoginActivity.this, ForgotPasswordActivity.class);
+                startActivity(i);
             }
         });
     }

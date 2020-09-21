@@ -56,7 +56,6 @@ public class ProfileLoaderFragment extends Fragment {
     FloatingActionButton camera;
     String uid, uploadpath;
     int day, month, year;
-    String imagetitle;
     Uri imageUri;
     ProgressBar progressBar;
     CircleImageView profileImage;
@@ -121,6 +120,7 @@ public class ProfileLoaderFragment extends Fragment {
                 SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PREF, MODE_PRIVATE);
                 uid = sharedPreferences.getString("student_id", "1");
                 hashMap.put("student_id", uid);
+                progressBar.setVisibility(View.VISIBLE);
 
                 hashMap.put("name", name.getText().toString().trim());
                 hashMap.put("email", email.getText().toString().trim());
@@ -133,7 +133,6 @@ public class ProfileLoaderFragment extends Fragment {
                     @Override
                     public boolean setResponse(String responseStr) {
                         try {
-                            progressBar.setVisibility(View.VISIBLE);
                             JSONObject reader = new JSONObject(responseStr);
                             if (reader.getString("action").equals("1")) {
                                 progressBar.setVisibility(View.INVISIBLE);
@@ -217,8 +216,8 @@ public class ProfileLoaderFragment extends Fragment {
         city.setFocusable(false);
         city.setFocusableInTouchMode(false);
 
-        date.setFocusable(false);
-        date.setFocusableInTouchMode(false);
+        /*date.setFocusable(false);
+        date.setFocusableInTouchMode(false);*/
 
         edit.setVisibility(View.VISIBLE);
         if (b) {
@@ -236,7 +235,7 @@ public class ProfileLoaderFragment extends Fragment {
         Date currenttime = Calendar.getInstance().getTime();
         SimpleDateFormat df = new SimpleDateFormat("yyyy_MM_dd_HH_mm_ss");
         String imagetitle = df.format(currenttime.getTime());
-
+        progressBar.setVisibility(View.VISIBLE);
         Master_Upload master_upload = new Master_Upload();
         JSONObject jsonObject = master_upload.Master_Upload(imageUri, getActivity(), imagetitle, ".jpeg",
                 utils_string.IMAGE_URL.USER_PROFILE);
@@ -254,7 +253,6 @@ public class ProfileLoaderFragment extends Fragment {
                     @Override
                     public boolean setResponse(String responseStr) {
                         try {
-                            progressBar.setVisibility(View.VISIBLE);
                             JSONObject reader = new JSONObject(responseStr);
                             if (reader.getString("action").equals("1")) {
                                 progressBar.setVisibility(View.INVISIBLE);
@@ -343,7 +341,7 @@ public class ProfileLoaderFragment extends Fragment {
                         Toast.makeText(getContext(), "Update ReviewProfile Successfully", Toast.LENGTH_SHORT).show();
                     }
                 } catch (JSONException e) {
-                    Toast.makeText(getContext(), "updateReviewProfile" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(getContext(), "updateReviewProfile" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }
@@ -352,6 +350,8 @@ public class ProfileLoaderFragment extends Fragment {
     }
 
     private void GetUserDetails() {
+        progressBar.setVisibility(View.VISIBLE);
+
         HashMap<String, String> param = new HashMap<>();
         param.put("type", "getProfile");
 
@@ -361,7 +361,6 @@ public class ProfileLoaderFragment extends Fragment {
         NetworkCall.call(param).setDataResponseListener(new NetworkCall.SetDataResponse() {
             @Override
             public boolean setResponse(String responseStr) {
-                progressBar.setVisibility(View.VISIBLE);
                 if (jsn.checkResponseStr(responseStr)) {
                     JSONObject userdetails = jsn.getJSONObjectAt0(responseStr);
                     try {

@@ -52,7 +52,6 @@ public class HomeFragment extends Fragment {
         emptyData = view.findViewById(R.id.noData);
         processHome=view.findViewById(R.id.processHome);
 
-
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(VERTICAL);
         recyclerView.setLayoutManager(manager);
@@ -89,12 +88,9 @@ public class HomeFragment extends Fragment {
                         processHome.setVisibility(View.INVISIBLE);
                         Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
-
                     return false;
                 }
             });
-
         return view;
-
     }
 }

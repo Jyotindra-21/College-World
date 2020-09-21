@@ -70,6 +70,7 @@ public class MoreInfoFragment extends Fragment {
     ProgressBar progressBar;
     ImageView imageView;
     Dialog dialog;
+    ReviewAdapter reviewAdapter;
     ArrayList<HomeModule> modulesList = new ArrayList<>();
     public static final String PREF = "1";
     String id = "1";
@@ -91,16 +92,14 @@ public class MoreInfoFragment extends Fragment {
 
         clgid = new SosManagement(getContext()).getCollegeId();
 
-
-        if (list == null) {
-            max.setVisibility(View.INVISIBLE);
-            min.setVisibility(View.VISIBLE);
-
-        } else {
+        /*if (reviewAdapter.getItemCount() > 0) {
             min.setVisibility(View.INVISIBLE);
             max.setVisibility(View.VISIBLE);
-        }
 
+        } else {
+            min.setVisibility(View.VISIBLE);
+            max.setVisibility(View.INVISIBLE);
+        }*/
 
         max.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,7 +129,6 @@ public class MoreInfoFragment extends Fragment {
 
         return view;
     }
-
 
     //review Dialogs Call
     private void Dialog() throws ParseException {
@@ -308,14 +306,14 @@ public class MoreInfoFragment extends Fragment {
                     ReviewResponse reviewResponse = new Gson().fromJson(responseStr, ReviewResponse.class);
                     if (reviewResponse.action == 1) {
                         list.addAll(reviewResponse.message);
-                        ReviewAdapter adapter = new ReviewAdapter(getContext(), list);
-                        userReviews.setAdapter(adapter);
+                        reviewAdapter = new ReviewAdapter(getContext(), list);
+                        userReviews.setAdapter(reviewAdapter);
                         progressBar.setVisibility(View.INVISIBLE);
                     }
                 } catch (JSONException e) {
-                    imageView.setVisibility(View.VISIBLE);
+                   // imageView.setVisibility(View.VISIBLE);
                     progressBar.setVisibility(View.INVISIBLE);
-                    Toast.makeText(getContext(), "getReviewUser" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                   // Toast.makeText(getContext(), "getReviewUser" + e.getMessage(), Toast.LENGTH_SHORT).show();
                 }
                 return false;
             }

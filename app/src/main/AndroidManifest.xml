@@ -14,7 +14,9 @@
         android:label="@string/app_name"
         android:roundIcon="@drawable/clglogo"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".ui.activitys.ForgotPasswordActivity"/>
         <activity
             android:name=".ui.activitys.ReviewActivity"
             android:label="@string/reviews"
@@ -23,16 +25,16 @@
             android:name=".ui.activitys.WishListActivity"
             android:label="@string/wishlist"
             android:theme="@style/ActionbarTheme" />
-
         <activity android:name=".ui.layout.CollegeViewLoaderActivity" />
         <activity android:name=".ui.layout.ProfileVewPagerActivity" />
-        <activity android:name=".ui.activitys.MainActivity" />
+        <activity
+            android:name=".ui.activitys.MainActivity"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.activitys.StreamActivity" />
         <activity android:name=".ui.activitys.StreamActivitys" />
         <activity android:name=".ui.activitys.RegisterActivity" />
         <activity android:name=".ui.activitys.LoginActivity" />
         <activity android:name=".ui.activitys.SplashActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -13,6 +13,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.Gravity;
+import android.view.KeyboardShortcutGroup;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,6 +34,9 @@ import com.example.collegeproject.utility.SosManagement;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.infideap.drawerbehavior.AdvanceDrawerLayout;
+
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEvent;
+import net.yslibrary.android.keyboardvisibilityevent.KeyboardVisibilityEventListener;
 
 import org.json.JSONObject;
 
@@ -240,6 +244,17 @@ public class MainActivity extends AppCompatActivity implements DrawerLock {
                 }
                 getSupportFragmentManager().beginTransaction().replace(R.id.replaceFragment, fragment).commit();
                 return true;
+            }
+        });
+
+        KeyboardVisibilityEvent.setEventListener(MainActivity.this, new KeyboardVisibilityEventListener() {
+            @Override
+            public void onVisibilityChanged(boolean isOpen) {
+                if(isOpen){
+                    bottomAppBar.setVisibility(View.INVISIBLE);
+                }else {
+                    bottomAppBar.setVisibility(View.VISIBLE);
+                }
             }
         });
 

@@ -57,7 +57,7 @@ public class WishListFragment extends Fragment {
         recyclerView.setLayoutManager(linearLayoutManager);
 
         setRecyclerView();
-
+        list.clear();
         return view;
     }
 
@@ -67,13 +67,13 @@ public class WishListFragment extends Fragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(PREF, MODE_PRIVATE);
         uid = sharedPreferences.getString("student_id", "1");
         hashMap.put("student_id", uid);
-
+        progressBar.setVisibility(View.VISIBLE);
         NetworkCall.call(hashMap).setDataResponseListener(new NetworkCall.SetDataResponse() {
             @Override
             public boolean setResponse(String responseStr) {
                 try {
                     imageView.setVisibility(View.INVISIBLE);
-                    progressBar.setVisibility(View.VISIBLE);
+
                     WishListResponse response = new Gson().fromJson(responseStr, WishListResponse.class);
                     if (response.action == 1) {
                         list.addAll(response.message);

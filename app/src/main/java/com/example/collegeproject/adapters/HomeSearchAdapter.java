@@ -3,9 +3,12 @@ package com.example.collegeproject.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.opengl.Visibility;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Filter;
+import android.widget.Filterable;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,11 +21,8 @@ import com.example.collegeproject.R;
 import com.example.collegeproject.databasecall.NetworkCall;
 import com.example.collegeproject.databasecall.utils_string;
 import com.example.collegeproject.module.HomeModule;
-import com.example.collegeproject.module.WishListModule;
-import com.example.collegeproject.responsemodule.WishListResponse;
 import com.example.collegeproject.ui.layout.CollegeViewLoaderActivity;
 import com.example.collegeproject.utility.SosManagement;
-import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -34,16 +34,18 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> {
+public class HomeSearchAdapter extends RecyclerView.Adapter<HomeSearchAdapter.MyViewHolder> implements Filterable {
 
     Context context;
     ArrayList<HomeModule> list;
+    ArrayList<HomeModule> listFull;
 
     public static String PREF = "1";
 
-    public HomeAdapter(Context context, ArrayList<HomeModule> list) {
+    public HomeSearchAdapter(Context context, ArrayList<HomeModule> list) {
         this.context = context;
         this.list = list;
+        listFull = new ArrayList<>(list);
 
     }
 
@@ -102,13 +104,44 @@ public class HomeAdapter extends RecyclerView.Adapter<HomeAdapter.MyViewHolder> 
         });
 
 
-
     }
 
     @Override
     public int getItemCount() {
         return list.size();
     }
+
+    @Override
+    public Filter getFilter() {
+        return searchFilter;
+    }
+
+    private Filter searchFilter = new Filter() {
+        @Override
+        protected FilterResults performFiltering(CharSequence charSequence) {
+            List<HomeModule> filterlist = new ArrayList<>();
+            if (charSequence == null || charSequence.length() == 0) {
+                //filterlist.addAll(listFull);
+            } else {
+                String filterPattern = charSequence.toString().toLowerCase().trim();
+                for (HomeModule item : listFull) {
+                    if (item.getClg_name().toLowerCase().contains(filterPattern)) {
+                        filterlist.add(item);
+                    }
+                }
+            }
+            FilterResults result = new FilterResults();
+            result.values = filterlist;
+            return result;
+        }
+
+        @Override
+        protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
+            list.clear();
+            list.addAll((List)filterResults.values);
+            notifyDataSetChanged();
+        }
+    };
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 

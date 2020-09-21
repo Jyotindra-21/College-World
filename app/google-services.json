@@ -1,34 +1,42 @@
 {
   "project_info": {
-    "project_number": "642526849648",
-    "firebase_url": "https://collegeproject-c0ecb.firebaseio.com",
-    "project_id": "collegeproject-c0ecb",
-    "storage_bucket": "collegeproject-c0ecb.appspot.com"
+    "project_number": "566376247011",
+    "firebase_url": "https://mymroject.firebaseio.com",
+    "project_id": "mymroject",
+    "storage_bucket": "mymroject.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:642526849648:android:35aefea793052ed05b62b5",
+        "mobilesdk_app_id": "1:566376247011:android:a8b9d55a6367e85d7cdfd6",
         "android_client_info": {
           "package_name": "com.example.collegeproject"
         }
       },
       "oauth_client": [
         {
-          "client_id": "642526849648-tk89s4bbm6qth9oat9fis5ra7a23srlo.apps.googleusercontent.com",
+          "client_id": "566376247011-0ji2blhn7oqhcdo2cgdt6t05mcmvcs5k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.collegeproject",
+            "certificate_hash": "9a0beb56e7cc7c6c3fcef4e727fe0be470b43390"
+          }
+        },
+        {
+          "client_id": "566376247011-tm6lilmlphjbri1vuo7qv3976lr6brb6.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDloiKdYcRzipEX84G0M-2ePhKPu2MV7MQ"
+          "current_key": "AIzaSyC-lOjlJzLPVNt9lNyxGjZA8SxPJpMlo6Q"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "642526849648-tk89s4bbm6qth9oat9fis5ra7a23srlo.apps.googleusercontent.com",
+              "client_id": "566376247011-tm6lilmlphjbri1vuo7qv3976lr6brb6.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

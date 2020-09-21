@@ -56,6 +56,7 @@ public class CollegeFacultyFragment extends Fragment {
         manager.setOrientation(RecyclerView.VERTICAL);
         recyclerView.setLayoutManager(manager);
         list.clear();
+        progressBar.setVisibility(View.VISIBLE);
         HashMap<String, String> hashMap = new HashMap<>();
         hashMap.put("type", "getfaculty");
         hashMap.put("clg_id", clg_id);
@@ -64,7 +65,6 @@ public class CollegeFacultyFragment extends Fragment {
             @Override
             public boolean setResponse(String responseStr) {
                 try {
-                    progressBar.setVisibility(View.VISIBLE);
                     imageView.setVisibility(View.GONE);
                     JSONObject r = new JSONObject(responseStr);
                     FacultyResponse response = new Gson().fromJson(responseStr, FacultyResponse.class);
